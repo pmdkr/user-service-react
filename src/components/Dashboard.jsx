@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 const Dashboard = () => {
 
 
@@ -17,14 +17,14 @@ const Dashboard = () => {
             setError("");
             const [userRes, productRes, orderRes] = await Promise.all(
                 [
-                    fetch("https://jsonplaceholder.typicode.com/users"),
+                    fetch("https://dummyjson.com/users"),
                     fetch("https://dummyjson.com/products"),
                     fetch("https://dummyjson.com/carts"),
                 ]
             );
 
 
-            if (!userRes.ok | !productRes.ok | orderRes.ok) {
+            if (!userRes.ok | !productRes.ok | !orderRes.ok) {
                 throw new Error("API resopne is failed");
             }
 
@@ -34,8 +34,11 @@ const Dashboard = () => {
                 orderRes.json(),
             ]);
 
-            setUsers(userData);
-            setProducts(productData, products);
+            console.log(userData);
+            console.log(productData.products)
+
+            setUsers(userData.users);
+            setProducts(productData.products);
             setOrders(orderData.carts);
 
         } catch (err) {
@@ -92,13 +95,13 @@ const Dashboard = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product => (
+                    {products.map((product) => (
                         <tr key={product.id}>
                             <td>{product.id}</td>
                             <td>{product.title}</td>
                             <td>{product.price}</td>
                         </tr>
-                    )))}
+                    ))}
                 </tbody>
             </table>
 
@@ -128,4 +131,4 @@ const Dashboard = () => {
 }
 
 
-export default Dashboard;
+export default Dashboard
